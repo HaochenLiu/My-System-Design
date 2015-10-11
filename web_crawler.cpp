@@ -119,7 +119,7 @@ bool GetHttpResponse(const string& url, char*& response, int& bytesRead) {
 }
 
 //提取所有的URL以及图片URL
-void HTMLParse (string& htmlResponse, vector<string> & imgurls, const string& host) {
+void HTMLParse(string& htmlResponse, vector<string> & imgurls, const string& host) {
     //找所有连接，加入queue中
     const char* p = htmlResponse.c_str();
     char* tag = "href=\"";
