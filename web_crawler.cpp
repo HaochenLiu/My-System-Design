@@ -1,4 +1,3 @@
-//#include <Windows.h>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -132,14 +131,14 @@ void HTMLParse(string& htmlResponse, vector<string> & imgurls, const string& hos
             char* url = new char[nextQ - pos + 1];
             //char url[100]; //固定大小的会发生缓冲区溢出的危险
             sscanf(pos, "%[^\"]", url);
-            string surl = url;  // 转换成string类型，可以自动释放内存
+            string surl = url;  //转换成string类型，可以自动释放内存
             if(visitedUrl.find(surl) == visitedUrl.end()) {
                 visitedUrl.insert(surl);
                 ofile<<surl<<endl;
                 hrefUrl.push(surl);
             }
             pos = strstr(pos, tag);
-            delete[] url;  // 释放掉申请的内存
+            delete[] url;  //释放掉申请的内存
         }
     }
     ofile<<endl<<endl;
@@ -245,7 +244,7 @@ void DownLoadImg(vector<string>& imgurls, const string& url) {
 void BFS(const string& url) {
     char* response;
     int bytes;
-    // 获取网页的相应，放入response中。
+    //获取网页的相应，放入response中。
     if(!GetHttpResponse(url, response, bytes)) {
         cout<<"The url is wrong! ignore."<<endl;
         return;
@@ -255,7 +254,7 @@ void BFS(const string& url) {
     string filename = ToFileName(url);
     ofstream ofile("./html/" + filename);
     if(ofile.is_open()) {
-        // 保存该网页的文本内容
+        //保存该网页的文本内容
         ofile<<httpResponse<<endl;
         ofile.close();
     }
@@ -274,28 +273,28 @@ void main() {
         return;
     }
 
-    // 创建文件夹，保存图片和网页文本文件
+    //创建文件夹，保存图片和网页文本文件
     CreateDirectory("./img", 0);
     CreateDirectory("./html", 0);
 
-    // 遍历的起始地址
-    // string urlStart = "http://hao.360.cn/meinvdaohang.html";
+    //遍历的起始地址
+    //string urlStart = "http://hao.360.cn/meinvdaohang.html";
     string urlStart = "http://www.wmpic.me/tupian";
-    // string urlStart = "http://item.taobao.com/item.htm?spm=a230r.1.14.19.sBBNbz&id=36366887850&ns=1#detail";
-    // string urlStart = "http://projecteuler.net";
+    //string urlStart = "http://item.taobao.com/item.htm?spm=a230r.1.14.19.sBBNbz&id=36366887850&ns=1#detail";
+    //string urlStart = "http://projecteuler.net";
     
-    // 使用广度遍历
-    // 提取网页中的超链接放入hrefUrl中，提取图片链接，下载图片。
+    //使用广度遍历
+    //提取网页中的超链接放入hrefUrl中，提取图片链接，下载图片。
     BFS(urlStart);
 
-    // 访问过的网址保存起来
+    //访问过的网址保存起来
     visitedUrl.insert(urlStart);
 
     while(hrefUrl.size() != 0) {
-        string url = hrefUrl.front();  // 从队列的最开始取出一个网址
+        string url = hrefUrl.front();  //从队列的最开始取出一个网址
         cout<<url<<endl;
-        BFS(url);                      // 遍历提取出来的那个网页，找它里面的超链接网页放入hrefUrl，下载它里面的文本，图片
-        hrefUrl.pop();                 // 遍历完之后，删除这个网址
+        BFS(url);                      //遍历提取出来的那个网页，找它里面的超链接网页放入hrefUrl，下载它里面的文本，图片
+        hrefUrl.pop();                 //遍历完之后，删除这个网址
     }
     WSACleanup();
     return;
