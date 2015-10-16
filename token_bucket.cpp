@@ -1,3 +1,7 @@
+/*
+time能精确到秒
+*/
+
 #include <iostream>
 #include <ctime>
 #include <windows.h>
