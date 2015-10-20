@@ -22,7 +22,7 @@ public:
     }
 
     int GetTest() {
-        return m_Test;
+        return m_Test++;
     }
 private:
     Singleton() {
@@ -39,6 +39,8 @@ int main() {
     cout<<"a->GetTest() "<<a->GetTest()<<endl;
     Singleton* b = Singleton::GetInstance();
     cout<<"b->GetTest() "<<b->GetTest()<<endl;
+    Singleton* c = Singleton::GetInstance();
+    cout<<"c->GetTest() "<<c->GetTest()<<endl;
     Singleton::DestoryInstance();
 
     int wait = 0;
